@@ -1,6 +1,5 @@
-/* إعدادات أساسية ومتغيرات الألوان */
 :root {
-    --primary-color: #4F46E5; /* لون أزرق/بنفسجي عصري */
+    --primary-color: #4F46E5;
     --secondary-color: #818CF8;
     --background-color: #F3F4F6;
     --card-bg: #FFFFFF;
@@ -22,6 +21,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    transition: direction 0.3s ease;
 }
 
 .container {
@@ -30,7 +30,35 @@ body {
     margin: 0 auto;
 }
 
-/* تصميم الهيدر */
+.relative-container {
+    position: relative;
+}
+
+/* زرار تغيير اللغة */
+.lang-btn {
+    position: absolute;
+    top: -20px;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 5px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.lang-btn:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+html[dir="ltr"] .lang-btn {
+    right: auto;
+    left: 0;
+}
+
 .header {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
@@ -53,7 +81,6 @@ body {
     opacity: 0.9;
 }
 
-/* شبكة الأدوات (Grid) */
 .tools-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -61,7 +88,6 @@ body {
     margin-bottom: 50px;
 }
 
-/* تصميم كروت الأدوات */
 .tool-card {
     background-color: var(--card-bg);
     padding: 30px;
@@ -73,7 +99,7 @@ body {
 }
 
 .tool-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
 }
 
@@ -88,7 +114,7 @@ body {
     justify-content: center;
     font-size: 2rem;
     margin: 0 auto 20px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .tool-card:hover .icon-wrapper {
@@ -99,16 +125,26 @@ body {
 .tool-card h3 {
     font-size: 1.4rem;
     margin-bottom: 15px;
-    color: var(--text-color);
 }
 
 .tool-card p {
     color: var(--text-muted);
     font-size: 0.95rem;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
-/* تصميم الأزرار */
+/* تنسيق مربعات الإدخال */
+.tool-input, .file-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #f9fafb;
+    text-align: center;
+}
+
 .btn {
     background-color: var(--primary-color);
     color: white;
@@ -126,7 +162,6 @@ body {
     background-color: #4338CA;
 }
 
-/* تصميم الفوتر */
 .footer {
     text-align: center;
     padding: 20px;
