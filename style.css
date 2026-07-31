@@ -1,11 +1,53 @@
-body{
-    font-family: Arial;
-    text-align:center;
-    margin-top:100px;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baraa Tools</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-button{
-    padding:15px 30px;
-    font-size:20px;
-    cursor:pointer;
-}
+<header>
+    <h1>🛠️ Baraa Tools</h1>
+    <p>Free Online Tools</p>
+</header>
+
+<div class="container">
+
+    <input type="text" placeholder="🔍 Search tools...">
+
+    <div class="cards">
+
+        <a href="#" class="card">
+            🔐
+            <h3>Password Generator</h3>
+            <p>Create secure passwords</p>
+        </a>
+
+        <a href="#" class="card">
+            📅
+            <h3>Age Calculator</h3>
+            <p>Calculate your age</p>
+        </a>
+
+        <a href="#" class="card">
+            ⚖️
+            <h3>BMI Calculator</h3>
+            <p>Check your BMI</p>
+        </a>
+
+        <a href="#" class="card">
+            📱
+            <h3>QR Code Generator</h3>
+            <p>Create QR Codes</p>
+        </a>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
