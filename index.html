@@ -4,117 +4,223 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أدواتي الذكية | Smart Tools</title>
-    
-    <!-- الخطوط والأيقونات -->
+    <!-- خطوط وأيقونات -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- مكتبات خارجية للأدوات -->
+    <!-- مكتبة الـ PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- الهيدر الزجاجي (Apple Style) -->
+    <!-- الهيدر الزجاجي -->
     <header class="header">
-        <div class="container header-content">
-            <button class="menu-btn" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
-            <h1 class="logo"><i class="fa-solid fa-toolbox"></i> <span data-key="title">أدواتي الذكية</span></h1>
-            
-            <button class="lang-btn" onclick="toggleLanguage()">
-                <i class="fa-solid fa-globe"></i> <span id="langText">English</span>
-            </button>
+        <div class="header-container">
+            <button class="icon-btn" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
+            <h1 class="logo"><i class="fa-solid fa-layer-group"></i> <span data-lang="title">أدواتي</span></h1>
+            <button class="icon-btn" onclick="toggleLanguage()"><i class="fa-solid fa-language"></i></button>
         </div>
-        <p class="subtitle animate fade-in" data-key="subtitle">مجموعتك المفضلة من الأدوات السريعة والمجانية</p>
     </header>
 
     <!-- القائمة الجانبية -->
     <div class="sidebar" id="sidebar">
-        <button class="close-btn" onclick="toggleMenu()"><i class="fa-solid fa-xmark"></i></button>
-        <h2 data-key="menuTitle" style="margin-bottom: 20px; text-align: center;">الأدوات المتاحة</h2>
-        <ul class="menu-list">
-            <li><a href="#tool-password" onclick="toggleMenu()"><i class="fa-solid fa-key"></i> <span data-key="tool1Title">مولد كلمات المرور</span></a></li>
-            <li><a href="#tool-pdf" onclick="toggleMenu()"><i class="fa-solid fa-file-pdf"></i> <span data-key="tool2Title">PDF إلى صورة</span></a></li>
-            <li><a href="#tool-qr" onclick="toggleMenu()"><i class="fa-solid fa-qrcode"></i> <span data-key="tool3Title">صانع الباركود (QR)</span></a></li>
-            <li><a href="#tool-counter" onclick="toggleMenu()"><i class="fa-solid fa-pen-nib"></i> <span data-key="tool4Title">عداد الكلمات</span></a></li>
+        <button class="icon-btn close-btn" onclick="toggleMenu()"><i class="fa-solid fa-xmark"></i></button>
+        <h2 data-lang="menuTitle" style="text-align: center; margin-bottom: 20px; color: var(--primary);">القائمة</h2>
+        <ul class="menu-list" id="menuList">
+            <!-- سيتم توليد الروابط هنا تلقائياً لتوفير المساحة -->
         </ul>
     </div>
     <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
-    <!-- المحتوى (الأدوات) -->
+    <!-- الحاوية الرئيسية -->
     <main class="container">
-        <div class="tools-grid">
+        <p class="subtitle" data-lang="subtitle">20 أداة احترافية في مكان واحد</p>
+        
+        <div class="tools-grid" id="toolsGrid">
             
-            <!-- أداة 1: مولد الباسورد -->
-            <div class="tool-card animate fade-up" id="tool-password">
+            <!-- 1. مولد الباسورد -->
+            <div class="tool-card" id="tool-1">
                 <div class="icon-wrapper"><i class="fa-solid fa-key"></i></div>
-                <h3 data-key="tool1Title">مولد كلمات المرور</h3>
-                <p data-key="tool1Desc">أنشئ كلمات مرور قوية ومعقدة لحماية حساباتك.</p>
-                <input type="text" id="passwordOutput" placeholder="كلمة المرور ستظهر هنا" readonly class="tool-input">
-                <button class="btn" onclick="generatePassword()" data-key="tool1Btn">توليد كلمة مرور</button>
+                <h3 data-lang="t1">مولد كلمات المرور</h3>
+                <input type="text" id="passOut" class="tool-input" readonly>
+                <button class="btn" onclick="generatePassword()" data-lang="btnGen">توليد</button>
             </div>
 
-            <!-- أداة 2: تحويل PDF -->
-            <div class="tool-card animate fade-up" id="tool-pdf">
+            <!-- 2. PDF إلى صورة -->
+            <div class="tool-card" id="tool-2">
                 <div class="icon-wrapper"><i class="fa-solid fa-file-pdf"></i></div>
-                <h3 data-key="tool2Title">PDF إلى صورة</h3>
-                <p data-key="tool2Desc">حول ملفات الـ PDF الخاصة بك إلى صور بسهولة.</p>
-                <input type="file" id="pdfInput" accept="application/pdf" class="file-input">
-                <button class="btn" onclick="convertPdfToImage()" data-key="tool2Btn">تحويل وعرض</button>
-                <canvas id="pdfCanvas" style="max-width: 100%; margin-top: 15px; display: none; border-radius: 8px;"></canvas>
-                <a id="downloadPdfBtn" class="btn btn-success" style="display: none; margin-top: 10px; text-decoration: none;" download="converted_page.png" data-key="downloadBtn">حفظ الصورة</a>
+                <h3 data-lang="t2">PDF إلى صورة</h3>
+                <input type="file" id="pdfInput" accept="application/pdf" class="tool-input" style="padding: 5px;">
+                <button class="btn" onclick="convertPDF()" data-lang="btnConv">تحويل</button>
+                <canvas id="pdfCanvas" style="display:none; width:100%; margin-top:10px; border-radius:10px;"></canvas>
+                <a id="downloadPdf" class="btn" style="display:none; margin-top:10px; text-decoration:none; background:var(--success);" download="page.png" data-lang="btnSave">حفظ الصورة</a>
             </div>
 
-            <!-- أداة 3: صانع QR Code -->
-            <div class="tool-card animate fade-up" id="tool-qr">
+            <!-- 3. صانع الباركود (مُحدث وشغال 100%) -->
+            <div class="tool-card" id="tool-3">
                 <div class="icon-wrapper"><i class="fa-solid fa-qrcode"></i></div>
-                <h3 data-key="tool3Title">صانع الباركود (QR)</h3>
-                <p data-key="tool3Desc">حول أي رابط أو نص إلى رمز استجابة سريعة.</p>
-                <input type="text" id="qrInput" class="tool-input" placeholder="أدخل الرابط أو النص هنا">
-                <button class="btn" onclick="generateQR()" data-key="tool3Btn">إنشاء الباركود</button>
-                <div id="qrOutput" style="margin-top: 15px; display: flex; justify-content: center;"></div>
+                <h3 data-lang="t3">صانع الباركود</h3>
+                <input type="text" id="qrInput" class="tool-input" data-lang="phQR" placeholder="رابط أو نص">
+                <button class="btn" onclick="makeQR()" data-lang="btnGen">توليد</button>
+                <img id="qrImg" src="" style="display:none; margin: 15px auto 0; border-radius: 10px;" alt="QR Code">
             </div>
 
-            <!-- أداة 4: عداد الكلمات -->
-            <div class="tool-card animate fade-up" id="tool-counter">
+            <!-- 4. عداد الكلمات -->
+            <div class="tool-card" id="tool-4">
                 <div class="icon-wrapper"><i class="fa-solid fa-pen-nib"></i></div>
-                <h3 data-key="tool4Title">عداد الكلمات</h3>
-                <p data-key="tool4Desc">احسب عدد الكلمات والحروف في أي نص.</p>
-                <textarea id="textInput" class="tool-input" rows="3" placeholder="اكتب أو انسخ النص هنا..." oninput="countText()"></textarea>
-                <div class="counter-stats">
-                    <div><strong id="wordCount">0</strong> <br><span data-key="wordLabel">كلمة</span></div>
-                    <div><strong id="charCount">0</strong> <br><span data-key="charLabel">حرف</span></div>
+                <h3 data-lang="t4">عداد الكلمات</h3>
+                <textarea id="wcInput" class="tool-input" rows="2" oninput="countWords()" data-lang="phText" placeholder="اكتب هنا..."></textarea>
+                <div class="stats"><span id="wCount">0</span> <span data-lang="lblW">كلمة</span> | <span id="cCount">0</span> <span data-lang="lblC">حرف</span></div>
+            </div>
+
+            <!-- 5. تكبير الحروف الإنجليزية -->
+            <div class="tool-card" id="tool-5">
+                <div class="icon-wrapper"><i class="fa-solid fa-font"></i></div>
+                <h3 data-lang="t5">حروف كبيرة (UPPER)</h3>
+                <textarea id="upInput" class="tool-input" rows="2"></textarea>
+                <button class="btn" onclick="transformText('upInput', 'upper')" data-lang="btnConv">تحويل</button>
+            </div>
+
+            <!-- 6. تصغير الحروف الإنجليزية -->
+            <div class="tool-card" id="tool-6">
+                <div class="icon-wrapper"><i class="fa-solid fa-a"></i></div>
+                <h3 data-lang="t6">حروف صغيرة (lower)</h3>
+                <textarea id="lowInput" class="tool-input" rows="2"></textarea>
+                <button class="btn" onclick="transformText('lowInput', 'lower')" data-lang="btnConv">تحويل</button>
+            </div>
+
+            <!-- 7. عكس النص -->
+            <div class="tool-card" id="tool-7">
+                <div class="icon-wrapper"><i class="fa-solid fa-left-right"></i></div>
+                <h3 data-lang="t7">عكس النص</h3>
+                <textarea id="revInput" class="tool-input" rows="2"></textarea>
+                <button class="btn" onclick="transformText('revInput', 'reverse')" data-lang="btnConv">تحويل</button>
+            </div>
+
+            <!-- 8. إزالة المسافات الزائدة -->
+            <div class="tool-card" id="tool-8">
+                <div class="icon-wrapper"><i class="fa-solid fa-compress"></i></div>
+                <h3 data-lang="t8">إزالة المسافات</h3>
+                <textarea id="spcInput" class="tool-input" rows="2"></textarea>
+                <button class="btn" onclick="transformText('spcInput', 'spaces')" data-lang="btnConv">تحويل</button>
+            </div>
+
+            <!-- 9. Base64 تشفير -->
+            <div class="tool-card" id="tool-9">
+                <div class="icon-wrapper"><i class="fa-solid fa-lock"></i></div>
+                <h3 data-lang="t9">تشفير Base64</h3>
+                <textarea id="b64eInput" class="tool-input" rows="2"></textarea>
+                <button class="btn" onclick="transformText('b64eInput', 'b64enc')" data-lang="btnConv">تحويل</button>
+            </div>
+
+            <!-- 10. Base64 فك تشفير -->
+            <div class="tool-card" id="tool-10">
+                <div class="icon-wrapper"><i class="fa-solid fa-lock-open"></i></div>
+                <h3 data-lang="t10">فك تشفير Base64</h3>
+                <textarea id="b64dInput" class="tool-input" rows="2"></textarea>
+                <button class="btn" onclick="transformText('b64dInput', 'b64dec')" data-lang="btnConv">تحويل</button>
+            </div>
+
+            <!-- 11. URL تشفير -->
+            <div class="tool-card" id="tool-11">
+                <div class="icon-wrapper"><i class="fa-solid fa-link"></i></div>
+                <h3 data-lang="t11">تشفير الروابط</h3>
+                <textarea id="urleInput" class="tool-input" rows="2"></textarea>
+                <button class="btn" onclick="transformText('urleInput', 'urlenc')" data-lang="btnConv">تحويل</button>
+            </div>
+
+            <!-- 12. URL فك تشفير -->
+            <div class="tool-card" id="tool-12">
+                <div class="icon-wrapper"><i class="fa-solid fa-link-slash"></i></div>
+                <h3 data-lang="t12">فك تشفير الروابط</h3>
+                <textarea id="urldInput" class="tool-input" rows="2"></textarea>
+                <button class="btn" onclick="transformText('urldInput', 'urldec')" data-lang="btnConv">تحويل</button>
+            </div>
+
+            <!-- 13. نص إلى Binary -->
+            <div class="tool-card" id="tool-13">
+                <div class="icon-wrapper"><i class="fa-solid fa-0"></i><i class="fa-solid fa-1"></i></div>
+                <h3 data-lang="t13">نص إلى Binary</h3>
+                <textarea id="binInput" class="tool-input" rows="2"></textarea>
+                <button class="btn" onclick="transformText('binInput', 'tobin')" data-lang="btnConv">تحويل</button>
+            </div>
+
+            <!-- 14. Binary إلى نص -->
+            <div class="tool-card" id="tool-14">
+                <div class="icon-wrapper"><i class="fa-solid fa-language"></i></div>
+                <h3 data-lang="t14">Binary إلى نص</h3>
+                <textarea id="txtInput" class="tool-input" rows="2"></textarea>
+                <button class="btn" onclick="transformText('txtInput', 'totxt')" data-lang="btnConv">تحويل</button>
+            </div>
+
+            <!-- 15. رقم عشوائي -->
+            <div class="tool-card" id="tool-15">
+                <div class="icon-wrapper"><i class="fa-solid fa-dice"></i></div>
+                <h3 data-lang="t15">رقم عشوائي</h3>
+                <div style="display:flex; gap:10px; margin-bottom:15px;">
+                    <input type="number" id="minNum" class="tool-input" value="1" placeholder="Min">
+                    <input type="number" id="maxNum" class="tool-input" value="100" placeholder="Max">
                 </div>
+                <h2 id="randOut" style="color:var(--primary); margin-bottom:10px;">-</h2>
+                <button class="btn" onclick="genRandom()" data-lang="btnGen">توليد</button>
+            </div>
+
+            <!-- 16. حساب العمر -->
+            <div class="tool-card" id="tool-16">
+                <div class="icon-wrapper"><i class="fa-solid fa-cake-candles"></i></div>
+                <h3 data-lang="t16">حاسبة العمر</h3>
+                <input type="date" id="dobInput" class="tool-input">
+                <p id="ageOut" style="margin-bottom:10px; font-weight:bold;"></p>
+                <button class="btn" onclick="calcAge()" data-lang="btnConv">حساب</button>
+            </div>
+
+            <!-- 17. حساب BMI -->
+            <div class="tool-card" id="tool-17">
+                <div class="icon-wrapper"><i class="fa-solid fa-weight-scale"></i></div>
+                <h3 data-lang="t17">حاسبة كتلة الجسم</h3>
+                <div style="display:flex; gap:10px; margin-bottom:15px;">
+                    <input type="number" id="wInput" class="tool-input" placeholder="الوزن (kg)">
+                    <input type="number" id="hInput" class="tool-input" placeholder="الطول (cm)">
+                </div>
+                <p id="bmiOut" style="margin-bottom:10px; font-weight:bold;"></p>
+                <button class="btn" onclick="calcBMI()" data-lang="btnConv">حساب</button>
+            </div>
+
+            <!-- 18. محول الألوان (RGB للـ HEX) -->
+            <div class="tool-card" id="tool-18">
+                <div class="icon-wrapper"><i class="fa-solid fa-palette"></i></div>
+                <h3 data-lang="t18">لاقط الألوان</h3>
+                <input type="color" id="colorInput" class="tool-input" style="height:50px; cursor:pointer;" onchange="document.getElementById('colorOut').value = this.value">
+                <input type="text" id="colorOut" class="tool-input" readonly>
+            </div>
+
+            <!-- 19. نطق النص (Text to Speech) -->
+            <div class="tool-card" id="tool-19">
+                <div class="icon-wrapper"><i class="fa-solid fa-volume-high"></i></div>
+                <h3 data-lang="t19">الاستماع للنص</h3>
+                <textarea id="speechInput" class="tool-input" rows="2" data-lang="phText"></textarea>
+                <button class="btn" onclick="speakText()" data-lang="btnListen">استماع</button>
+            </div>
+
+            <!-- 20. إزالة السطور المكررة -->
+            <div class="tool-card" id="tool-20">
+                <div class="icon-wrapper"><i class="fa-solid fa-filter"></i></div>
+                <h3 data-lang="t20">إزالة التكرار</h3>
+                <textarea id="dupInput" class="tool-input" rows="2"></textarea>
+                <button class="btn" onclick="transformText('dupInput', 'dupes')" data-lang="btnConv">تحويل</button>
             </div>
 
         </div>
-
-        <!-- قسم التعليمات (كيفية الاستخدام) -->
-        <section class="instructions animate fade-up">
-            <h2 data-key="howToUseTitle"><i class="fa-solid fa-circle-info"></i> طريقة الاستخدام</h2>
-            <ul>
-                <li data-key="inst1"><b>مولد كلمات المرور:</b> اضغط على الزر ليتم توليد كلمة مرور معقدة فوراً لتنسخها.</li>
-                <li data-key="inst2"><b>PDF إلى صورة:</b> اختر الملف من جهازك، اضغط تحويل، ثم اضغط على "حفظ الصورة" لتحميلها.</li>
-                <li data-key="inst3"><b>صانع الباركود:</b> اكتب النص أو الصق الرابط، واضغط إنشاء ليظهر لك الكود جاهزاً للمسح.</li>
-                <li data-key="inst4"><b>عداد الكلمات:</b> فقط ابدأ في كتابة أو لصق النص، وسيقوم العداد بحساب الكلمات والحروف تلقائياً.</li>
-            </ul>
-        </section>
     </main>
 
-    <!-- الفوتر مع بيانات التواصل -->
-    <footer class="footer animate fade-in">
+    <!-- الفوتر -->
+    <footer class="footer">
         <div class="container">
-            <div class="contact-info">
-                <p><i class="fa-solid fa-phone"></i> <span data-key="phone">+20 123 456 7890</span></p>
-                <p><i class="fa-solid fa-envelope"></i> <span data-key="email">support@smarttools.com</span></p>
-            </div>
-            <p style="margin-top: 15px;"><span data-key="footer">تم التصميم بحب &copy; 2026 | مبرمج الأدوات</span></p>
+            <p><i class="fa-solid fa-phone"></i> +20 100 000 0000 | <i class="fa-solid fa-envelope"></i> info@smarttools.com</p>
+            <p style="margin-top: 10px; opacity:0.7;" data-lang="footer">تم التصميم بحب &copy; 2026</p>
         </div>
     </footer>
 
-    <!-- ربط ملف الجافاسكربت (يجب أن يكون هنا في النهاية لضمان تحميل العناصر) -->
     <script src="script.js"></script>
 </body>
 </html>
