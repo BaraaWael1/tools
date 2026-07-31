@@ -3,68 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أدواتي | My Tools</title>
+    <title>أدواتي الذكية | Smart Tools</title>
     
     <!-- الخطوط والأيقونات -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- مكتبة PDF -->
+    <!-- مكتبات خارجية للأدوات -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- الهيدر -->
+    <!-- الهيدر الزجاجي (Apple Style) -->
     <header class="header">
-        <div class="container relative-container">
-            <!-- زر تغيير اللغة -->
+        <div class="container header-content">
+            <button class="menu-btn" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
+            <h1 class="logo"><i class="fa-solid fa-toolbox"></i> <span data-key="title">أدواتي الذكية</span></h1>
+            
             <button class="lang-btn" onclick="toggleLanguage()">
                 <i class="fa-solid fa-globe"></i> <span id="langText">English</span>
             </button>
-            
-            <h1 class="logo"><i class="fa-solid fa-toolbox"></i> <span data-key="title">أدواتي الذكية</span></h1>
-            <p data-key="subtitle">مجموعتك المفضلة من الأدوات السريعة والمجانية</p>
         </div>
+        <p class="subtitle animate fade-in" data-key="subtitle">مجموعتك المفضلة من الأدوات السريعة والمجانية</p>
     </header>
 
-    <!-- المحتوى -->
+    <!-- القائمة الجانبية -->
+    <div class="sidebar" id="sidebar">
+        <button class="close-btn" onclick="toggleMenu()"><i class="fa-solid fa-xmark"></i></button>
+        <h2 data-key="menuTitle" style="margin-bottom: 20px; text-align: center;">الأدوات المتاحة</h2>
+        <ul class="menu-list">
+            <li><a href="#tool-password" onclick="toggleMenu()"><i class="fa-solid fa-key"></i> <span data-key="tool1Title">مولد كلمات المرور</span></a></li>
+            <li><a href="#tool-pdf" onclick="toggleMenu()"><i class="fa-solid fa-file-pdf"></i> <span data-key="tool2Title">PDF إلى صورة</span></a></li>
+            <li><a href="#tool-qr" onclick="toggleMenu()"><i class="fa-solid fa-qrcode"></i> <span data-key="tool3Title">صانع الباركود (QR)</span></a></li>
+            <li><a href="#tool-counter" onclick="toggleMenu()"><i class="fa-solid fa-pen-nib"></i> <span data-key="tool4Title">عداد الكلمات</span></a></li>
+        </ul>
+    </div>
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+    <!-- المحتوى (الأدوات) -->
     <main class="container">
         <div class="tools-grid">
             
             <!-- أداة 1: مولد الباسورد -->
-            <div class="tool-card">
+            <div class="tool-card animate fade-up" id="tool-password">
                 <div class="icon-wrapper"><i class="fa-solid fa-key"></i></div>
                 <h3 data-key="tool1Title">مولد كلمات المرور</h3>
                 <p data-key="tool1Desc">أنشئ كلمات مرور قوية ومعقدة لحماية حساباتك.</p>
-                
                 <input type="text" id="passwordOutput" placeholder="كلمة المرور ستظهر هنا" readonly class="tool-input">
-                
                 <button class="btn" onclick="generatePassword()" data-key="tool1Btn">توليد كلمة مرور</button>
             </div>
 
             <!-- أداة 2: تحويل PDF -->
-            <div class="tool-card">
+            <div class="tool-card animate fade-up" id="tool-pdf">
                 <div class="icon-wrapper"><i class="fa-solid fa-file-pdf"></i></div>
                 <h3 data-key="tool2Title">PDF إلى صورة</h3>
                 <p data-key="tool2Desc">حول ملفات الـ PDF الخاصة بك إلى صور بسهولة.</p>
-                
                 <input type="file" id="pdfInput" accept="application/pdf" class="file-input">
-                
-                <button class="btn" onclick="convertPdfToImage()" data-key="tool2Btn">تحويل إلى صورة</button>
-                
-                <canvas id="pdfCanvas" style="max-width: 100%; margin-top: 15px; display: none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"></canvas>
+                <button class="btn" onclick="convertPdfToImage()" data-key="tool2Btn">تحويل وعرض</button>
+                <canvas id="pdfCanvas" style="max-width: 100%; margin-top: 15px; display: none; border-radius: 8px;"></canvas>
+                <a id="downloadPdfBtn" class="btn btn-success" style="display: none; margin-top: 10px; text-decoration: none;" download="converted_page.png" data-key="downloadBtn">حفظ الصورة</a>
+            </div>
+
+            <!-- أداة 3: صانع QR Code -->
+            <div class="tool-card animate fade-up" id="tool-qr">
+                <div class="icon-wrapper"><i class="fa-solid fa-qrcode"></i></div>
+                <h3 data-key="tool3Title">صانع الباركود (QR)</h3>
+                <p data-key="tool3Desc">حول أي رابط أو نص إلى رمز استجابة سريعة.</p>
+                <input type="text" id="qrInput" class="tool-input" placeholder="أدخل الرابط أو النص هنا">
+                <button class="btn" onclick="generateQR()" data-key="tool3Btn">إنشاء الباركود</button>
+                <div id="qrOutput" style="margin-top: 15px; display: flex; justify-content: center;"></div>
+            </div>
+
+            <!-- أداة 4: عداد الكلمات -->
+            <div class="tool-card animate fade-up" id="tool-counter">
+                <div class="icon-wrapper"><i class="fa-solid fa-pen-nib"></i></div>
+                <h3 data-key="tool4Title">عداد الكلمات</h3>
+                <p data-key="tool4Desc">احسب عدد الكلمات والحروف في أي نص.</p>
+                <textarea id="textInput" class="tool-input" rows="3" placeholder="اكتب أو انسخ النص هنا..." oninput="countText()"></textarea>
+                <div class="counter-stats">
+                    <div><strong id="wordCount">0</strong> <br><span data-key="wordLabel">كلمة</span></div>
+                    <div><strong id="charCount">0</strong> <br><span data-key="charLabel">حرف</span></div>
+                </div>
             </div>
 
         </div>
+
+        <!-- قسم التعليمات (كيفية الاستخدام) -->
+        <section class="instructions animate fade-up">
+            <h2 data-key="howToUseTitle"><i class="fa-solid fa-circle-info"></i> طريقة الاستخدام</h2>
+            <ul>
+                <li data-key="inst1"><b>مولد كلمات المرور:</b> اضغط على الزر ليتم توليد كلمة مرور معقدة فوراً لتنسخها.</li>
+                <li data-key="inst2"><b>PDF إلى صورة:</b> اختر الملف من جهازك، اضغط تحويل، ثم اضغط على "حفظ الصورة" لتحميلها.</li>
+                <li data-key="inst3"><b>صانع الباركود:</b> اكتب النص أو الصق الرابط، واضغط إنشاء ليظهر لك الكود جاهزاً للمسح.</li>
+                <li data-key="inst4"><b>عداد الكلمات:</b> فقط ابدأ في كتابة أو لصق النص، وسيقوم العداد بحساب الكلمات والحروف تلقائياً.</li>
+            </ul>
+        </section>
     </main>
 
-    <!-- الفوتر -->
-    <footer class="footer">
-        <p><span data-key="footer">تم التصميم بحب &copy; 2026 | مبرمج الأدوات</span></p>
+    <!-- الفوتر مع بيانات التواصل -->
+    <footer class="footer animate fade-in">
+        <div class="container">
+            <div class="contact-info">
+                <p><i class="fa-solid fa-phone"></i> <span data-key="phone">+20 123 456 7890</span></p>
+                <p><i class="fa-solid fa-envelope"></i> <span data-key="email">support@smarttools.com</span></p>
+            </div>
+            <p style="margin-top: 15px;"><span data-key="footer">تم التصميم بحب &copy; 2026 | مبرمج الأدوات</span></p>
+        </div>
     </footer>
 
+    <!-- ربط ملف الجافاسكربت (يجب أن يكون هنا في النهاية لضمان تحميل العناصر) -->
     <script src="script.js"></script>
 </body>
 </html>
