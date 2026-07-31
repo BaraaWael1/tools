@@ -1,39 +1,70 @@
-<!-- ضيف السطر ده جوه الـ <head> عشان أداة الـ PDF تشتغل -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-
-<!-- ... (جزء الهيدر كما هو) ... -->
-
-<div class="tools-grid">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أدواتي | My Tools</title>
     
-    <!-- أداة 1: مولد كلمات المرور -->
-    <div class="tool-card">
-        <div class="icon-wrapper">
-            <i class="fa-solid fa-key"></i>
-        </div>
-        <h3>مولد كلمات المرور</h3>
-        <p>أنشئ كلمات مرور قوية ومعقدة بضغطة زر.</p>
-        
-        <!-- مربع لعرض كلمة المرور -->
-        <input type="text" id="passwordOutput" placeholder="كلمة المرور ستظهر هنا" readonly style="width: 100%; padding: 10px; margin-bottom: 15px; text-align: center; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 1.1rem; background-color: #f9fafb;">
-        
-        <button class="btn" onclick="generatePassword()">توليد كلمة مرور</button>
-    </div>
+    <!-- الخطوط والأيقونات -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- مكتبة PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-    <!-- أداة 2: تحويل PDF إلى صورة -->
-    <div class="tool-card">
-        <div class="icon-wrapper">
-            <i class="fa-solid fa-file-pdf"></i>
+    <!-- الهيدر -->
+    <header class="header">
+        <div class="container relative-container">
+            <!-- زر تغيير اللغة -->
+            <button class="lang-btn" onclick="toggleLanguage()">
+                <i class="fa-solid fa-globe"></i> <span id="langText">English</span>
+            </button>
+            
+            <h1 class="logo"><i class="fa-solid fa-toolbox"></i> <span data-key="title">أدواتي الذكية</span></h1>
+            <p data-key="subtitle">مجموعتك المفضلة من الأدوات السريعة والمجانية</p>
         </div>
-        <h3>PDF إلى صورة</h3>
-        <p>اختر ملف PDF لتحويل أول صفحة فيه إلى صورة.</p>
-        
-        <!-- زر رفع الملف -->
-        <input type="file" id="pdfInput" accept="application/pdf" style="margin-bottom: 15px; width: 100%;">
-        
-        <button class="btn" onclick="convertPdfToImage()">تحويل إلى صورة</button>
-        
-        <!-- مساحة لعرض الصورة الناتجة -->
-        <canvas id="pdfCanvas" style="max-width: 100%; margin-top: 15px; display: none; border: 1px solid #e5e7eb; border-radius: 8px;"></canvas>
-    </div>
+    </header>
 
-</div>
+    <!-- المحتوى -->
+    <main class="container">
+        <div class="tools-grid">
+            
+            <!-- أداة 1: مولد الباسورد -->
+            <div class="tool-card">
+                <div class="icon-wrapper"><i class="fa-solid fa-key"></i></div>
+                <h3 data-key="tool1Title">مولد كلمات المرور</h3>
+                <p data-key="tool1Desc">أنشئ كلمات مرور قوية ومعقدة لحماية حساباتك.</p>
+                
+                <input type="text" id="passwordOutput" placeholder="كلمة المرور ستظهر هنا" readonly class="tool-input">
+                
+                <button class="btn" onclick="generatePassword()" data-key="tool1Btn">توليد كلمة مرور</button>
+            </div>
+
+            <!-- أداة 2: تحويل PDF -->
+            <div class="tool-card">
+                <div class="icon-wrapper"><i class="fa-solid fa-file-pdf"></i></div>
+                <h3 data-key="tool2Title">PDF إلى صورة</h3>
+                <p data-key="tool2Desc">حول ملفات الـ PDF الخاصة بك إلى صور بسهولة.</p>
+                
+                <input type="file" id="pdfInput" accept="application/pdf" class="file-input">
+                
+                <button class="btn" onclick="convertPdfToImage()" data-key="tool2Btn">تحويل إلى صورة</button>
+                
+                <canvas id="pdfCanvas" style="max-width: 100%; margin-top: 15px; display: none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"></canvas>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- الفوتر -->
+    <footer class="footer">
+        <p><span data-key="footer">تم التصميم بحب &copy; 2026 | مبرمج الأدوات</span></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
