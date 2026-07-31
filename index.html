@@ -1,69 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Baraa Tools</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أدواتي | My Tools</title>
+    
+    <!-- استدعاء خط Cairo من جوجل -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- استدعاء مكتبة الأيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- ربط ملف التصميم -->
+    <link rel="stylesheet" href="style.css">
 </head>
+<body>
 
-<body class="bg-zinc-50">
+    <!-- الجزء العلوي (الهيدر) -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo"><i class="fa-solid fa-toolbox"></i> أدواتي الذكية</h1>
+            <p>مجموعتك المفضلة من الأدوات السريعة والمجانية</p>
+        </div>
+    </header>
 
-<nav class="w-full border-b bg-white">
-    <div class="max-w-7xl mx-auto px-8 h-20 flex items-center justify-between">
+    <!-- المحتوى الرئيسي (الأدوات) -->
+    <main class="container">
+        <div class="tools-grid">
+            
+            <!-- أداة 1: مولد كلمات المرور -->
+            <div class="tool-card">
+                <div class="icon-wrapper">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+                <h3>مولد كلمات المرور</h3>
+                <p>أنشئ كلمات مرور قوية ومعقدة لحماية حساباتك بخطوة واحدة.</p>
+                <button class="btn">استخدم الأداة</button>
+            </div>
 
-        <h1 class="text-3xl font-bold">
-            🛠️ Baraa Tools
-        </h1>
+            <!-- أداة 2: تحويل PDF إلى صورة -->
+            <div class="tool-card">
+                <div class="icon-wrapper">
+                    <i class="fa-solid fa-file-pdf"></i>
+                </div>
+                <h3>PDF إلى صورة</h3>
+                <p>حول ملفات الـ PDF الخاصة بك إلى صور بجودة عالية بسهولة.</p>
+                <button class="btn">استخدم الأداة</button>
+            </div>
 
-        <button class="bg-black text-white px-6 py-3 rounded-full hover:bg-zinc-800 transition">
-            Login
-        </button>
+            <!-- أداة 3: أداة إضافية (مثال) -->
+            <div class="tool-card">
+                <div class="icon-wrapper">
+                    <i class="fa-solid fa-calculator"></i>
+                </div>
+                <h3>حاسبة متقدمة</h3>
+                <p>قم بإجراء العمليات الحسابية المعقدة في ثوانٍ معدودة.</p>
+                <button class="btn">استخدم الأداة</button>
+            </div>
 
-    </div>
-</nav>
+        </div>
+    </main>
 
-<section class="max-w-7xl mx-auto text-center py-24 px-8">
-
-    <h2 class="text-6xl font-bold">
-        Free Online Tools
-    </h2>
-
-    <p class="text-zinc-500 text-xl mt-6">
-        Beautiful, fast and simple tools for everyone.
-    </p>
-
-    <input
-        class="mt-10 w-full max-w-xl border rounded-full px-6 py-4 text-lg"
-        placeholder="Search tools...">
-
-</section>
-
-<section class="max-w-7xl mx-auto px-8 pb-20">
-
-<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-<div class="bg-white rounded-3xl p-8 shadow hover:shadow-xl transition">
-<h3 class="text-2xl font-bold">🔐 Password Generator</h3>
-<p class="text-zinc-500 mt-3">Create strong passwords instantly.</p>
-</div>
-
-<div class="bg-white rounded-3xl p-8 shadow hover:shadow-xl transition">
-<h3 class="text-2xl font-bold">📅 Age Calculator</h3>
-<p class="text-zinc-500 mt-3">Calculate your exact age.</p>
-</div>
-
-<div class="bg-white rounded-3xl p-8 shadow hover:shadow-xl transition">
-<h3 class="text-2xl font-bold">📱 QR Generator</h3>
-<p class="text-zinc-500 mt-3">Generate QR codes.</p>
-</div>
-
-</div>
-
-</section>
+    <!-- الفوتر -->
+    <footer class="footer">
+        <p>تم التصميم بحب &copy; 2026 | مبرمج الأدوات</p>
+    </footer>
 
 </body>
 </html>
