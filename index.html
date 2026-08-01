@@ -3,224 +3,399 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أدواتي الذكية | Smart Tools</title>
-    <!-- خطوط وأيقونات -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- مكتبة الـ PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <title>ادوات الحج وائل وابنه الاكبر بيبو</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #f0f4f8;
+            --card-bg: #ffffff;
+            --text-main: #2c3e50;
+            --text-muted: #7f8c8d;
+            --primary-color: #3498db;
+            --primary-hover: #2980b9;
+            --action-color: #2ecc71;
+            --action-hover: #27ae60;
+            --shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 15px 30px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s ease-in-out;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 20px 40px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .lang-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(52, 152, 219, 0.3);
+            transition: var(--transition);
+        }
+
+        .lang-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 1.4rem;
+            color: var(--text-main);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        button.action-btn {
+            background: var(--action-color);
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        button.action-btn:hover {
+            background: var(--action-hover);
+        }
+
+        .result-box {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            min-height: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            word-wrap: break-word;
+        }
+
+        .barcode-container {
+            margin-top: 15px;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        svg {
+            max-width: 100%;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- الهيدر الزجاجي -->
-    <header class="header">
-        <div class="header-container">
-            <button class="icon-btn" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
-            <h1 class="logo"><i class="fa-solid fa-layer-group"></i> <span data-lang="title">أدواتي</span></h1>
-            <button class="icon-btn" onclick="toggleLanguage()"><i class="fa-solid fa-language"></i></button>
-        </div>
+<div class="container">
+    <header>
+        <button id="langToggle" class="lang-btn" onclick="toggleLanguage()">English</button>
+        <h1 id="mainTitle">ادوات الحج وائل وابنه الاكبر بيبو</h1>
+        <div style="width: 80px;"></div> <!-- Spacer for center alignment -->
     </header>
 
-    <!-- القائمة الجانبية -->
-    <div class="sidebar" id="sidebar">
-        <button class="icon-btn close-btn" onclick="toggleMenu()"><i class="fa-solid fa-xmark"></i></button>
-        <h2 data-lang="menuTitle" style="text-align: center; margin-bottom: 20px; color: var(--primary);">القائمة</h2>
-        <ul class="menu-list" id="menuList">
-            <!-- سيتم توليد الروابط هنا تلقائياً لتوفير المساحة -->
-        </ul>
+    <div class="tools-grid">
+        <!-- Tool 1: Barcode Generator -->
+        <div class="card">
+            <h2 id="title1">📊 مولد باركود</h2>
+            <input type="text" id="barcodeInput" placeholder="أدخل النص أو الرقم هنا...">
+            <button class="action-btn" id="btn1" onclick="generateBarcode()">توليد الباركود</button>
+            <div class="barcode-container" id="barcodeWrapper">
+                <svg id="barcode"></svg>
+            </div>
+        </div>
+
+        <!-- Tool 2: Password Generator -->
+        <div class="card">
+            <h2 id="title2">🔐 مولد كلمات المرور</h2>
+            <input type="number" id="passLength" placeholder="طول كلمة المرور (مثال: 12)" min="4" max="32">
+            <button class="action-btn" id="btn2" onclick="generatePassword()">توليد كلمة مرور</button>
+            <div class="result-box" id="passResult">...</div>
+        </div>
+
+        <!-- Tool 3: Word Counter -->
+        <div class="card">
+            <h2 id="title3">📝 عداد الكلمات</h2>
+            <textarea id="textInput" rows="4" placeholder="اكتب أو انسخ النص هنا..."></textarea>
+            <button class="action-btn" id="btn3" onclick="countWords()">احسب الكلمات</button>
+            <div class="result-box" id="wordResult">الكلمات: 0 | الحروف: 0</div>
+        </div>
+
+        <!-- Tool 4: Age Calculator -->
+        <div class="card">
+            <h2 id="title4">⏳ حاسبة العمر</h2>
+            <input type="date" id="dobInput">
+            <button class="action-btn" id="btn4" onclick="calculateAge()">احسب عمري</button>
+            <div class="result-box" id="ageResult">...</div>
+        </div>
+
+        <!-- Tool 5: BMI Calculator -->
+        <div class="card">
+            <h2 id="title5">⚖️ حاسبة كتلة الجسم</h2>
+            <input type="number" id="weightInput" placeholder="الوزن بالكيلوجرام (مثال: 70)">
+            <input type="number" id="heightInput" placeholder="الطول بالسنتيمتر (مثال: 175)">
+            <button class="action-btn" id="btn5" onclick="calculateBMI()">احسب الكتلة</button>
+            <div class="result-box" id="bmiResult">...</div>
+        </div>
     </div>
-    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+</div>
 
-    <!-- الحاوية الرئيسية -->
-    <main class="container">
-        <p class="subtitle" data-lang="subtitle">20 أداة احترافية في مكان واحد</p>
+<script>
+    // --- Translations Dictionary ---
+    const translations = {
+        ar: {
+            mainTitle: "ادوات الحج وائل وابنه الاكبر بيبو",
+            langToggle: "English",
+            title1: "📊 مولد باركود",
+            title2: "🔐 مولد كلمات المرور",
+            title3: "📝 عداد الكلمات",
+            title4: "⏳ حاسبة العمر",
+            title5: "⚖️ حاسبة كتلة الجسم",
+            btn1: "توليد الباركود",
+            btn2: "توليد كلمة مرور",
+            btn3: "احسب الكلمات",
+            btn4: "احسب عمري",
+            btn5: "احسب الكتلة",
+            barcodeInput: "أدخل النص أو الرقم هنا...",
+            passLength: "طول كلمة المرور (مثال: 12)",
+            textInput: "اكتب أو انسخ النص هنا...",
+            weightInput: "الوزن بالكيلوجرام (مثال: 70)",
+            heightInput: "الطول بالسنتيمتر (مثال: 175)",
+            wordRes: "الكلمات: {w} | الحروف: {c}",
+            ageRes: "{y} سنة، {m} شهر، {d} يوم",
+            bmiRes: "مؤشر الكتلة: {bmi} ({status})",
+            bmiStatuses: ["نقص في الوزن", "وزن طبيعي", "وزن زائد", "سمنة"],
+            selectDateError: "الرجاء تحديد تاريخ الميلاد"
+        },
+        en: {
+            mainTitle: "Haj Wael & His Eldest Son Bibo's Tools",
+            langToggle: "العربية",
+            title1: "📊 Barcode Generator",
+            title2: "🔐 Password Generator",
+            title3: "📝 Word Counter",
+            title4: "⏳ Age Calculator",
+            title5: "⚖️ BMI Calculator",
+            btn1: "Generate Barcode",
+            btn2: "Generate Password",
+            btn3: "Count Words",
+            btn4: "Calculate Age",
+            btn5: "Calculate BMI",
+            barcodeInput: "Enter text or number here...",
+            passLength: "Password length (e.g. 12)",
+            textInput: "Type or paste text here...",
+            weightInput: "Weight in KG (e.g. 70)",
+            heightInput: "Height in CM (e.g. 175)",
+            wordRes: "Words: {w} | Characters: {c}",
+            ageRes: "{y} Years, {m} Months, {d} Days",
+            bmiRes: "BMI: {bmi} ({status})",
+            bmiStatuses: ["Underweight", "Normal weight", "Overweight", "Obesity"],
+            selectDateError: "Please select a date of birth"
+        }
+    };
+
+    let currentLang = 'ar';
+
+    // --- Language Toggle Logic ---
+    function toggleLanguage() {
+        currentLang = currentLang === 'ar' ? 'en' : 'ar';
+        document.documentElement.lang = currentLang;
+        document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
         
-        <div class="tools-grid" id="toolsGrid">
-            
-            <!-- 1. مولد الباسورد -->
-            <div class="tool-card" id="tool-1">
-                <div class="icon-wrapper"><i class="fa-solid fa-key"></i></div>
-                <h3 data-lang="t1">مولد كلمات المرور</h3>
-                <input type="text" id="passOut" class="tool-input" readonly>
-                <button class="btn" onclick="generatePassword()" data-lang="btnGen">توليد</button>
-            </div>
+        const t = translations[currentLang];
+        
+        // Update Texts
+        document.getElementById('mainTitle').innerText = t.mainTitle;
+        document.getElementById('langToggle').innerText = t.langToggle;
+        document.getElementById('title1').innerText = t.title1;
+        document.getElementById('title2').innerText = t.title2;
+        document.getElementById('title3').innerText = t.title3;
+        document.getElementById('title4').innerText = t.title4;
+        document.getElementById('title5').innerText = t.title5;
+        document.getElementById('btn1').innerText = t.btn1;
+        document.getElementById('btn2').innerText = t.btn2;
+        document.getElementById('btn3').innerText = t.btn3;
+        document.getElementById('btn4').innerText = t.btn4;
+        document.getElementById('btn5').innerText = t.btn5;
+        
+        // Update Placeholders
+        document.getElementById('barcodeInput').placeholder = t.barcodeInput;
+        document.getElementById('passLength').placeholder = t.passLength;
+        document.getElementById('textInput').placeholder = t.textInput;
+        document.getElementById('weightInput').placeholder = t.weightInput;
+        document.getElementById('heightInput').placeholder = t.heightInput;
 
-            <!-- 2. PDF إلى صورة -->
-            <div class="tool-card" id="tool-2">
-                <div class="icon-wrapper"><i class="fa-solid fa-file-pdf"></i></div>
-                <h3 data-lang="t2">PDF إلى صورة</h3>
-                <input type="file" id="pdfInput" accept="application/pdf" class="tool-input" style="padding: 5px;">
-                <button class="btn" onclick="convertPDF()" data-lang="btnConv">تحويل</button>
-                <canvas id="pdfCanvas" style="display:none; width:100%; margin-top:10px; border-radius:10px;"></canvas>
-                <a id="downloadPdf" class="btn" style="display:none; margin-top:10px; text-decoration:none; background:var(--success);" download="page.png" data-lang="btnSave">حفظ الصورة</a>
-            </div>
+        // Reset Results
+        document.getElementById('passResult').innerText = "...";
+        document.getElementById('ageResult').innerText = "...";
+        document.getElementById('bmiResult').innerText = "...";
+        document.getElementById('wordResult').innerText = t.wordRes.replace('{w}', 0).replace('{c}', 0);
+    }
 
-            <!-- 3. صانع الباركود (مُحدث وشغال 100%) -->
-            <div class="tool-card" id="tool-3">
-                <div class="icon-wrapper"><i class="fa-solid fa-qrcode"></i></div>
-                <h3 data-lang="t3">صانع الباركود</h3>
-                <input type="text" id="qrInput" class="tool-input" data-lang="phQR" placeholder="رابط أو نص">
-                <button class="btn" onclick="makeQR()" data-lang="btnGen">توليد</button>
-                <img id="qrImg" src="" style="display:none; margin: 15px auto 0; border-radius: 10px;" alt="QR Code">
-            </div>
+    // --- Tool 1: Barcode Generator ---
+    function generateBarcode() {
+        const text = document.getElementById('barcodeInput').value;
+        const wrapper = document.getElementById('barcodeWrapper');
+        if (text.trim() === "") return;
+        
+        wrapper.style.display = 'block';
+        try {
+            JsBarcode("#barcode", text, {
+                format: "CODE128",
+                lineColor: "#2c3e50",
+                width: 2,
+                height: 50,
+                displayValue: true
+            });
+        } catch (e) {
+            alert(currentLang === 'ar' ? "نص غير صالح للباركود" : "Invalid text for barcode");
+        }
+    }
 
-            <!-- 4. عداد الكلمات -->
-            <div class="tool-card" id="tool-4">
-                <div class="icon-wrapper"><i class="fa-solid fa-pen-nib"></i></div>
-                <h3 data-lang="t4">عداد الكلمات</h3>
-                <textarea id="wcInput" class="tool-input" rows="2" oninput="countWords()" data-lang="phText" placeholder="اكتب هنا..."></textarea>
-                <div class="stats"><span id="wCount">0</span> <span data-lang="lblW">كلمة</span> | <span id="cCount">0</span> <span data-lang="lblC">حرف</span></div>
-            </div>
+    // --- Tool 2: Password Generator ---
+    function generatePassword() {
+        let length = document.getElementById('passLength').value;
+        if (!length || length < 4) length = 12;
+        const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+        let password = "";
+        for (let i = 0; i < length; i++) {
+            password += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        document.getElementById('passResult').innerText = password;
+    }
 
-            <!-- 5. تكبير الحروف الإنجليزية -->
-            <div class="tool-card" id="tool-5">
-                <div class="icon-wrapper"><i class="fa-solid fa-font"></i></div>
-                <h3 data-lang="t5">حروف كبيرة (UPPER)</h3>
-                <textarea id="upInput" class="tool-input" rows="2"></textarea>
-                <button class="btn" onclick="transformText('upInput', 'upper')" data-lang="btnConv">تحويل</button>
-            </div>
+    // --- Tool 3: Word Counter ---
+    function countWords() {
+        const text = document.getElementById('textInput').value.trim();
+        const words = text === "" ? 0 : text.split(/\s+/).length;
+        const chars = text.length;
+        const t = translations[currentLang];
+        document.getElementById('wordResult').innerText = t.wordRes.replace('{w}', words).replace('{c}', chars);
+    }
 
-            <!-- 6. تصغير الحروف الإنجليزية -->
-            <div class="tool-card" id="tool-6">
-                <div class="icon-wrapper"><i class="fa-solid fa-a"></i></div>
-                <h3 data-lang="t6">حروف صغيرة (lower)</h3>
-                <textarea id="lowInput" class="tool-input" rows="2"></textarea>
-                <button class="btn" onclick="transformText('lowInput', 'lower')" data-lang="btnConv">تحويل</button>
-            </div>
+    // --- Tool 4: Age Calculator ---
+    function calculateAge() {
+        const dobInput = document.getElementById('dobInput').value;
+        const t = translations[currentLang];
+        
+        if (!dobInput) {
+            document.getElementById('ageResult').innerText = t.selectDateError;
+            return;
+        }
 
-            <!-- 7. عكس النص -->
-            <div class="tool-card" id="tool-7">
-                <div class="icon-wrapper"><i class="fa-solid fa-left-right"></i></div>
-                <h3 data-lang="t7">عكس النص</h3>
-                <textarea id="revInput" class="tool-input" rows="2"></textarea>
-                <button class="btn" onclick="transformText('revInput', 'reverse')" data-lang="btnConv">تحويل</button>
-            </div>
+        const dob = new Date(dobInput);
+        const today = new Date();
+        
+        let years = today.getFullYear() - dob.getFullYear();
+        let months = today.getMonth() - dob.getMonth();
+        let days = today.getDate() - dob.getDate();
 
-            <!-- 8. إزالة المسافات الزائدة -->
-            <div class="tool-card" id="tool-8">
-                <div class="icon-wrapper"><i class="fa-solid fa-compress"></i></div>
-                <h3 data-lang="t8">إزالة المسافات</h3>
-                <textarea id="spcInput" class="tool-input" rows="2"></textarea>
-                <button class="btn" onclick="transformText('spcInput', 'spaces')" data-lang="btnConv">تحويل</button>
-            </div>
+        if (days < 0) {
+            months--;
+            days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+        }
+        if (months < 0) {
+            years--;
+            months += 12;
+        }
 
-            <!-- 9. Base64 تشفير -->
-            <div class="tool-card" id="tool-9">
-                <div class="icon-wrapper"><i class="fa-solid fa-lock"></i></div>
-                <h3 data-lang="t9">تشفير Base64</h3>
-                <textarea id="b64eInput" class="tool-input" rows="2"></textarea>
-                <button class="btn" onclick="transformText('b64eInput', 'b64enc')" data-lang="btnConv">تحويل</button>
-            </div>
+        document.getElementById('ageResult').innerText = t.ageRes.replace('{y}', years).replace('{m}', months).replace('{d}', days);
+    }
 
-            <!-- 10. Base64 فك تشفير -->
-            <div class="tool-card" id="tool-10">
-                <div class="icon-wrapper"><i class="fa-solid fa-lock-open"></i></div>
-                <h3 data-lang="t10">فك تشفير Base64</h3>
-                <textarea id="b64dInput" class="tool-input" rows="2"></textarea>
-                <button class="btn" onclick="transformText('b64dInput', 'b64dec')" data-lang="btnConv">تحويل</button>
-            </div>
+    // --- Tool 5: BMI Calculator ---
+    function calculateBMI() {
+        const weight = parseFloat(document.getElementById('weightInput').value);
+        const height = parseFloat(document.getElementById('heightInput').value) / 100;
+        const t = translations[currentLang];
 
-            <!-- 11. URL تشفير -->
-            <div class="tool-card" id="tool-11">
-                <div class="icon-wrapper"><i class="fa-solid fa-link"></i></div>
-                <h3 data-lang="t11">تشفير الروابط</h3>
-                <textarea id="urleInput" class="tool-input" rows="2"></textarea>
-                <button class="btn" onclick="transformText('urleInput', 'urlenc')" data-lang="btnConv">تحويل</button>
-            </div>
+        if (!weight || !height) return;
 
-            <!-- 12. URL فك تشفير -->
-            <div class="tool-card" id="tool-12">
-                <div class="icon-wrapper"><i class="fa-solid fa-link-slash"></i></div>
-                <h3 data-lang="t12">فك تشفير الروابط</h3>
-                <textarea id="urldInput" class="tool-input" rows="2"></textarea>
-                <button class="btn" onclick="transformText('urldInput', 'urldec')" data-lang="btnConv">تحويل</button>
-            </div>
+        const bmi = (weight / (height * height)).toFixed(1);
+        let statusIdx = 0;
 
-            <!-- 13. نص إلى Binary -->
-            <div class="tool-card" id="tool-13">
-                <div class="icon-wrapper"><i class="fa-solid fa-0"></i><i class="fa-solid fa-1"></i></div>
-                <h3 data-lang="t13">نص إلى Binary</h3>
-                <textarea id="binInput" class="tool-input" rows="2"></textarea>
-                <button class="btn" onclick="transformText('binInput', 'tobin')" data-lang="btnConv">تحويل</button>
-            </div>
+        if (bmi < 18.5) statusIdx = 0;
+        else if (bmi >= 18.5 && bmi < 24.9) statusIdx = 1;
+        else if (bmi >= 25 && bmi < 29.9) statusIdx = 2;
+        else statusIdx = 3;
 
-            <!-- 14. Binary إلى نص -->
-            <div class="tool-card" id="tool-14">
-                <div class="icon-wrapper"><i class="fa-solid fa-language"></i></div>
-                <h3 data-lang="t14">Binary إلى نص</h3>
-                <textarea id="txtInput" class="tool-input" rows="2"></textarea>
-                <button class="btn" onclick="transformText('txtInput', 'totxt')" data-lang="btnConv">تحويل</button>
-            </div>
+        const status = t.bmiStatuses[statusIdx];
+        document.getElementById('bmiResult').innerText = t.bmiRes.replace('{bmi}', bmi).replace('{status}', status);
+    }
+</script>
 
-            <!-- 15. رقم عشوائي -->
-            <div class="tool-card" id="tool-15">
-                <div class="icon-wrapper"><i class="fa-solid fa-dice"></i></div>
-                <h3 data-lang="t15">رقم عشوائي</h3>
-                <div style="display:flex; gap:10px; margin-bottom:15px;">
-                    <input type="number" id="minNum" class="tool-input" value="1" placeholder="Min">
-                    <input type="number" id="maxNum" class="tool-input" value="100" placeholder="Max">
-                </div>
-                <h2 id="randOut" style="color:var(--primary); margin-bottom:10px;">-</h2>
-                <button class="btn" onclick="genRandom()" data-lang="btnGen">توليد</button>
-            </div>
-
-            <!-- 16. حساب العمر -->
-            <div class="tool-card" id="tool-16">
-                <div class="icon-wrapper"><i class="fa-solid fa-cake-candles"></i></div>
-                <h3 data-lang="t16">حاسبة العمر</h3>
-                <input type="date" id="dobInput" class="tool-input">
-                <p id="ageOut" style="margin-bottom:10px; font-weight:bold;"></p>
-                <button class="btn" onclick="calcAge()" data-lang="btnConv">حساب</button>
-            </div>
-
-            <!-- 17. حساب BMI -->
-            <div class="tool-card" id="tool-17">
-                <div class="icon-wrapper"><i class="fa-solid fa-weight-scale"></i></div>
-                <h3 data-lang="t17">حاسبة كتلة الجسم</h3>
-                <div style="display:flex; gap:10px; margin-bottom:15px;">
-                    <input type="number" id="wInput" class="tool-input" placeholder="الوزن (kg)">
-                    <input type="number" id="hInput" class="tool-input" placeholder="الطول (cm)">
-                </div>
-                <p id="bmiOut" style="margin-bottom:10px; font-weight:bold;"></p>
-                <button class="btn" onclick="calcBMI()" data-lang="btnConv">حساب</button>
-            </div>
-
-            <!-- 18. محول الألوان (RGB للـ HEX) -->
-            <div class="tool-card" id="tool-18">
-                <div class="icon-wrapper"><i class="fa-solid fa-palette"></i></div>
-                <h3 data-lang="t18">لاقط الألوان</h3>
-                <input type="color" id="colorInput" class="tool-input" style="height:50px; cursor:pointer;" onchange="document.getElementById('colorOut').value = this.value">
-                <input type="text" id="colorOut" class="tool-input" readonly>
-            </div>
-
-            <!-- 19. نطق النص (Text to Speech) -->
-            <div class="tool-card" id="tool-19">
-                <div class="icon-wrapper"><i class="fa-solid fa-volume-high"></i></div>
-                <h3 data-lang="t19">الاستماع للنص</h3>
-                <textarea id="speechInput" class="tool-input" rows="2" data-lang="phText"></textarea>
-                <button class="btn" onclick="speakText()" data-lang="btnListen">استماع</button>
-            </div>
-
-            <!-- 20. إزالة السطور المكررة -->
-            <div class="tool-card" id="tool-20">
-                <div class="icon-wrapper"><i class="fa-solid fa-filter"></i></div>
-                <h3 data-lang="t20">إزالة التكرار</h3>
-                <textarea id="dupInput" class="tool-input" rows="2"></textarea>
-                <button class="btn" onclick="transformText('dupInput', 'dupes')" data-lang="btnConv">تحويل</button>
-            </div>
-
-        </div>
-    </main>
-
-    <!-- الفوتر -->
-    <footer class="footer">
-        <div class="container">
-            <p><i class="fa-solid fa-phone"></i> +20 100 000 0000 | <i class="fa-solid fa-envelope"></i> info@smarttools.com</p>
-            <p style="margin-top: 10px; opacity:0.7;" data-lang="footer">تم التصميم بحب &copy; 2026</p>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
 </body>
 </html>
