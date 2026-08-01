@@ -422,21 +422,22 @@
         const status = t.bmiStatuses[statusIdx];
         document.getElementById('bmiResult').innerText = t.bmiRes.replace('{bmi}', bmi).replace('{status}', status);
       // --- Tool 6: QR Code Generator ---
-      function GenerateQR() {
+    function generateQR() {
         const text = document.getElementById('qrInput').value;
-        const qrContainer = document.getElement('qrResult');
-        //تفريغ المحتوى القديم
-        qrContainer.innerHTML = " ";
-        if (text.trim() === "") return;
-        //توليد الكود الجديد
-        new QRCode(qrContainer, {
-          text: text,
-          width: 150,
-          height: 150,
-          colorDark: "#2c3e50",
-          colorLight: "#ffffff",
-          correctLevel: QRCode.CorrectLevel.H
-        });}
+        const qrContainer = document.getElementById('qrResult');
+        
+        // لو المربع فاضي، امسح أي كيو ار كود قديم
+        if (text.trim() === "") {
+            qrContainer.innerHTML = "";
+            return;
+        }
+
+        // استخدام API مجاني وسريع جداً لتوليد الـ QR Code كصورة
+        const qrApiUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(text);
+        
+        // عرض الصورة داخل الموقع
+        qrContainer.innerHTML = `<img src="${qrApiUrl}" alt="QR Code" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">`;
+    }
     }
 </script>
 
