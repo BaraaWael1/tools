@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ادوات مفيدة جداً</title>
+    <title>ادوات الحج وائل وابنه الاكبر بيبو</title>
+    <!-- استدعاء مكتبة الباركود فقط -->
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
     <style>
         :root {
@@ -147,28 +148,33 @@
             word-wrap: break-word;
         }
 
-        .barcode-container {
+        .barcode-container, .qr-container {
             margin-top: 15px;
             background: white;
             padding: 10px;
             border-radius: 8px;
-            display: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 50px;
         }
         
+        .barcode-container {
+            display: none;
+        }
+
         svg {
             max-width: 100%;
         }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    
 </head>
 <body>
 
 <div class="container">
     <header>
         <button id="langToggle" class="lang-btn" onclick="toggleLanguage()">English</button>
-        <h1 id="mainTitle">ادوات مفيدة جداً</h1>
-        <div style="width: 80px;"></div> <!-- Spacer for center alignment -->
+        <h1 id="mainTitle">ادوات الحج وائل وابنه الاكبر بيبو</h1>
+        <div style="width: 80px;"></div>
     </header>
 
     <div class="tools-grid">
@@ -214,63 +220,56 @@
             <button class="action-btn" id="btn5" onclick="calculateBMI()">احسب الكتلة</button>
             <div class="result-box" id="bmiResult">...</div>
         </div>
+
+        <!-- Tool 6: QR Code Generator -->
+        <div class="card">
+            <h2 id="title6">📱 صانع QR Code</h2>
+            <input type="text" id="qrInput" placeholder="أدخل الرابط أو النص هنا...">
+            <button class="action-btn" id="btn6" onclick="generateQR()">توليد QR Code</button>
+            <div id="qrResult" class="qr-container"></div>
+        </div>
     </div>
 </div>
-    <!--Tool 6:QR code Generator -->
-    <div class="card">
-        <h2 id="title6"> صانع
-            QR Code</h2>
-        <input type="text"
-            id="qrinput" placeholder="أدخل الرابط أو النص هنا...">
-        <button class="action-btn" id="btn6"
-            oneclick="generateQR()"> توليد QR Code</button>
-        <div id="qrResult"
-            style="margin-top: 15px; display:
-                flex; justify-content: center; "></div>
-    </div>
-    
 
 <script>
     // --- Translations Dictionary ---
     const translations = {
         ar: {
-            mainTitle: "ادوات مفيدة جداً",
+            mainTitle: "ادوات الحج وائل وابنه الاكبر بيبو",
             langToggle: "English",
             title1: "📊 مولد باركود",
             title2: "🔐 مولد كلمات المرور",
             title3: "📝 عداد الكلمات",
             title4: "⏳ حاسبة العمر",
             title5: "⚖️ حاسبة كتلة الجسم",
-            title6: "صانع كيو ار كود",
+            title6: "📱 صانع QR Code",
             btn1: "توليد الباركود",
             btn2: "توليد كلمة مرور",
             btn3: "احسب الكلمات",
             btn4: "احسب عمري",
             btn5: "احسب الكتلة",
-            btn6: "توليد كيو ار كود",
-          
+            btn6: "توليد QR Code",
             barcodeInput: "أدخل النص أو الرقم هنا...",
             passLength: "طول كلمة المرور (مثال: 12)",
             textInput: "اكتب أو انسخ النص هنا...",
             weightInput: "الوزن بالكيلوجرام (مثال: 70)",
             heightInput: "الطول بالسنتيمتر (مثال: 175)",
+            qrInput: "أدخل الرابط أو النص هنا...",
             wordRes: "الكلمات: {w} | الحروف: {c}",
             ageRes: "{y} سنة، {m} شهر، {d} يوم",
             bmiRes: "مؤشر الكتلة: {bmi} ({status})",
             bmiStatuses: ["نقص في الوزن", "وزن طبيعي", "وزن زائد", "سمنة"],
-            qrInput: "أدخل النص هنا...",
             selectDateError: "الرجاء تحديد تاريخ الميلاد"
-            
         },
         en: {
-            mainTitle: "very helpful tools",
+            mainTitle: "Haj Wael & His Eldest Son Bibo's Tools",
             langToggle: "العربية",
             title1: "📊 Barcode Generator",
             title2: "🔐 Password Generator",
             title3: "📝 Word Counter",
             title4: "⏳ Age Calculator",
             title5: "⚖️ BMI Calculator",
-            title6: "QR Code Generator",
+            title6: "📱 QR Code Generator",
             btn1: "Generate Barcode",
             btn2: "Generate Password",
             btn3: "Count Words",
@@ -282,10 +281,10 @@
             textInput: "Type or paste text here...",
             weightInput: "Weight in KG (e.g. 70)",
             heightInput: "Height in CM (e.g. 175)",
+            qrInput: "Enter link or text here...",
             wordRes: "Words: {w} | Characters: {c}",
             ageRes: "{y} Years, {m} Months, {d} Days",
             bmiRes: "BMI: {bmi} ({status})",
-            qrInput: "Enter Link or text here...",
             bmiStatuses: ["Underweight", "Normal weight", "Overweight", "Obesity"],
             selectDateError: "Please select a date of birth"
         }
@@ -293,7 +292,6 @@
 
     let currentLang = 'ar';
 
-    // --- Language Toggle Logic ---
     function toggleLanguage() {
         currentLang = currentLang === 'ar' ? 'en' : 'ar';
         document.documentElement.lang = currentLang;
@@ -301,7 +299,6 @@
         
         const t = translations[currentLang];
         
-        // Update Texts
         document.getElementById('mainTitle').innerText = t.mainTitle;
         document.getElementById('langToggle').innerText = t.langToggle;
         document.getElementById('title1').innerText = t.title1;
@@ -310,6 +307,7 @@
         document.getElementById('title4').innerText = t.title4;
         document.getElementById('title5').innerText = t.title5;
         document.getElementById('title6').innerText = t.title6;
+        
         document.getElementById('btn1').innerText = t.btn1;
         document.getElementById('btn2').innerText = t.btn2;
         document.getElementById('btn3').innerText = t.btn3;
@@ -317,7 +315,6 @@
         document.getElementById('btn5').innerText = t.btn5;
         document.getElementById('btn6').innerText = t.btn6;
         
-        // Update Placeholders
         document.getElementById('barcodeInput').placeholder = t.barcodeInput;
         document.getElementById('passLength').placeholder = t.passLength;
         document.getElementById('textInput').placeholder = t.textInput;
@@ -325,21 +322,19 @@
         document.getElementById('heightInput').placeholder = t.heightInput;
         document.getElementById('qrInput').placeholder = t.qrInput;
 
-        // Reset Results
         document.getElementById('passResult').innerText = "...";
         document.getElementById('ageResult').innerText = "...";
         document.getElementById('bmiResult').innerText = "...";
         document.getElementById('wordResult').innerText = t.wordRes.replace('{w}', 0).replace('{c}', 0);
-        document.getElementById('qrResult').innerHTML = "..."; //تصفيرالنتيجة عند تغيير اللغة
+        document.getElementById('qrResult').innerHTML = "";
     }
 
-    // --- Tool 1: Barcode Generator ---
     function generateBarcode() {
         const text = document.getElementById('barcodeInput').value;
         const wrapper = document.getElementById('barcodeWrapper');
         if (text.trim() === "") return;
         
-        wrapper.style.display = 'block';
+        wrapper.style.display = 'flex';
         try {
             JsBarcode("#barcode", text, {
                 format: "CODE128",
@@ -353,7 +348,6 @@
         }
     }
 
-    // --- Tool 2: Password Generator ---
     function generatePassword() {
         let length = document.getElementById('passLength').value;
         if (!length || length < 4) length = 12;
@@ -365,7 +359,6 @@
         document.getElementById('passResult').innerText = password;
     }
 
-    // --- Tool 3: Word Counter ---
     function countWords() {
         const text = document.getElementById('textInput').value.trim();
         const words = text === "" ? 0 : text.split(/\s+/).length;
@@ -374,7 +367,6 @@
         document.getElementById('wordResult').innerText = t.wordRes.replace('{w}', words).replace('{c}', chars);
     }
 
-    // --- Tool 4: Age Calculator ---
     function calculateAge() {
         const dobInput = document.getElementById('dobInput').value;
         const t = translations[currentLang];
@@ -403,7 +395,6 @@
         document.getElementById('ageResult').innerText = t.ageRes.replace('{y}', years).replace('{m}', months).replace('{d}', days);
     }
 
-    // --- Tool 5: BMI Calculator ---
     function calculateBMI() {
         const weight = parseFloat(document.getElementById('weightInput').value);
         const height = parseFloat(document.getElementById('heightInput').value) / 100;
@@ -421,23 +412,23 @@
 
         const status = t.bmiStatuses[statusIdx];
         document.getElementById('bmiResult').innerText = t.bmiRes.replace('{bmi}', bmi).replace('{status}', status);
-      // --- Tool 6: QR Code Generator ---
+    }
+
+    // الأداة السادسة: صانع الكيو ار كود باستخدام الـ API
     function generateQR() {
         const text = document.getElementById('qrInput').value;
         const qrContainer = document.getElementById('qrResult');
         
-        // لو المربع فاضي، امسح أي كيو ار كود قديم
         if (text.trim() === "") {
             qrContainer.innerHTML = "";
             return;
         }
 
-        // استخدام API مجاني وسريع جداً لتوليد الـ QR Code كصورة
+        // توليد رابط الصورة من الـ API
         const qrApiUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(text);
         
         // عرض الصورة داخل الموقع
         qrContainer.innerHTML = `<img src="${qrApiUrl}" alt="QR Code" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">`;
-    }
     }
 </script>
 
